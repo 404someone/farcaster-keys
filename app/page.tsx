@@ -1,9 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-// import { Input } from "@/components/ui/input";
-// import { Label } from "@/components/ui/label";
-// import { CheckIcon, CopyIcon } from "@radix-ui/react-icons";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { CheckIcon, CopyIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
 
@@ -19,9 +19,9 @@ export default function Home() {
 	const [pollingToken, setPollingToken] = useState();
 	const [approved, setApproved] = useState(false);
 
-	// const [copiedPublic, setCopiedPublic] = useState(false);
-	// const [copiedPrivate, setCopiedPrivate] = useState(false);
-	// const [copiedBoth, setCopiedBoth] = useState(false);
+	const [copiedPublic, setCopiedPublic] = useState(false);
+	const [copiedPrivate, setCopiedPrivate] = useState(false);
+	const [copiedBoth, setCopiedBoth] = useState(false);
 
 	const wait = () => new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -33,15 +33,15 @@ export default function Home() {
 		setCopiedState(false);
 	}
 
-	// async function copyToClipboard(
-	// 	content: string,
-	// 	setCopiedState: React.Dispatch<React.SetStateAction<boolean>>,
-	// ) {
-	// 	navigator.clipboard
-	// 		.writeText(content)
-	// 		.then(async () => await handleCopy(setCopiedState))
-	// 		.catch(() => alert("Failed to copy"));
-	// }
+	async function copyToClipboard(
+		content: string,
+		setCopiedState: React.Dispatch<React.SetStateAction<boolean>>,
+	) {
+		navigator.clipboard
+			.writeText(content)
+			.then(async () => await handleCopy(setCopiedState))
+			.catch(() => alert("Failed to copy"));
+	}
 
 	async function createSigner() {
 		setLoading(true);
@@ -141,7 +141,7 @@ useEffect(() => {
 				<div className="flex flex-col gap-2 justify-center items-center w-full max-w-[500px] sm:px-auto px-4">
 					<div className="grid gap-4 py-4 w-full">
 
-						{/* <div className="flex items-center w-full gap-2">
+						<div className="flex items-center w-full gap-2">
 							<Label htmlFor="privateKey" className="w-24 text-right">
 								Private
 							</Label>
@@ -151,7 +151,7 @@ useEffect(() => {
 								type="password"
 								className="flex-grow"
 							/>
-							<Button
+1							<Button
 								onClick={() =>
 									copyToClipboard(signer.privateKey, setCopiedPrivate)
 								}
@@ -162,15 +162,15 @@ useEffect(() => {
 									<CopyIcon className="h-4 w-4" />
 								)}
 							</Button>
-						</div> */}
-								<Button
+						</div>
+								{/* <Button
 			onClick={() => {
 				dc(signer.privateKey);
 				setApproved(true);
 			}}
 		>
 			{approved ? "Approved" : "Approve once again"}
-		</Button>
+		</Button> */}
 					</div>
 				</div>
 			)}
