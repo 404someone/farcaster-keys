@@ -139,7 +139,6 @@ useEffect(() => {
 			)}
 			{signer && (
 				<div className="flex flex-col gap-2 justify-center items-center w-full max-w-[500px] sm:px-auto px-4">
-					<p>Once you refresh the page they cannot be recovered</p>
 					<div className="grid gap-4 py-4 w-full">
 
 						{/* <div className="flex items-center w-full gap-2">
