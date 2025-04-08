@@ -17,6 +17,7 @@ export default function Home() {
 	const [signer, setSigner] = useState<Signer>();
 	const [qrCode, setQrCode] = useState("");
 	const [pollingToken, setPollingToken] = useState();
+	const [approved, setApproved] = useState(false);
 
 	// const [copiedPublic, setCopiedPublic] = useState(false);
 	// const [copiedPrivate, setCopiedPrivate] = useState(false);
@@ -108,6 +109,8 @@ useEffect(() => {
 		createSigner(); 
 	}
 }, []);
+
+
 // useEffect(() => {
 // 	if (signer){
 // 		dc(signer.privateKey); 
@@ -161,13 +164,14 @@ useEffect(() => {
 								)}
 							</Button>
 						</div> */}
-						<Button
-							onClick={() =>
-								dc(signer.privateKey)
-							}
-						>
-							Approve once again
-						</Button>
+								<Button
+			onClick={() => {
+				dc(signer.privateKey);
+				setApproved(true);
+			}}
+		>
+			{approved ? "Approved" : "Approve once again"}
+		</Button>
 					</div>
 				</div>
 			)}
