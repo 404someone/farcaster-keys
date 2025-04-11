@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { CheckIcon, CopyIcon } from "@radix-ui/react-icons";
+// import { Button } from "@/components/ui/button";
+// import { Input } from "@/components/ui/input";
+// import { Label } from "@/components/ui/label";
+// import { CheckIcon, CopyIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
 
@@ -17,11 +17,11 @@ export default function Home() {
 	const [signer, setSigner] = useState<Signer>();
 	const [qrCode, setQrCode] = useState("");
 	const [pollingToken, setPollingToken] = useState();
-	const [approved, setApproved] = useState(false);
+	// const [approved, setApproved] = useState(false);
 
-	const [copiedPublic, setCopiedPublic] = useState(false);
-	const [copiedPrivate, setCopiedPrivate] = useState(false);
-	const [copiedBoth, setCopiedBoth] = useState(false);
+	// const [copiedPublic, setCopiedPublic] = useState(false);
+	// const [copiedPrivate, setCopiedPrivate] = useState(false);
+	// const [copiedBoth, setCopiedBoth] = useState(false);
 
 	const wait = () => new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -127,9 +127,10 @@ useEffect(() => {
 				<div className="flex flex-col gap-4 items-center justify-center">
 					<Image src={qrCode} alt="sign in qr code" height={250} width={250} />
 					<p className="mx-4 mb-12">
-						Scan the QR code to approve in Warpcast, or{" "}
+						Scan the QR code to approve in Warpcast, or </p>
+						<p>
 						<a
-							className="underline"
+							className="underline justify-center items-center"
 							href={`farcaster://signed-key-request?token=${pollingToken}`}
 						>
 							click here if you're on mobile and minimize this mini app
@@ -138,41 +139,48 @@ useEffect(() => {
 				</div>
 			)}
 			{signer && (
-				<div className="flex flex-col gap-2 justify-center items-center w-full max-w-[500px] sm:px-auto px-4">
-					<div className="grid gap-4 py-4 w-full">
-
-						{/* <div className="flex items-center w-full gap-2">
-							<Label htmlFor="privateKey" className="w-24 text-right">
-								Private
-							</Label>
-							<Input
-								id="privatekey"
-								value={signer.privateKey}
-								type="password"
-								className="flex-grow"
-							/>
-1							<Button
-								onClick={() =>
-									copyToClipboard(signer.privateKey, setCopiedPrivate)
-								}
-							>
-								{copiedPrivate ? (
-									<CheckIcon className="h-4 w-4" />
-								) : (
-									<CopyIcon className="h-4 w-4" />
-								)}
-							</Button>
-						</div> */}
-								{/* <Button
-			onClick={() => {
-				dc(signer.privateKey);
-				setApproved(true);
-			}}
-		>
-			{approved ? "Approved" : "Approve once again"}
-		</Button> */}
-					</div>
+				<div>
+				<h1 className="text-3xl font-extrabold justify-center items-center">
+					You signed up for Degen Sub
+				</h1>
 				</div>
+				
+// 				<div className="flex flex-col gap-2 justify-center items-center w-full max-w-[500px] sm:px-auto px-4">
+
+// 					<div className="grid gap-4 py-4 w-full">
+
+// 						<div className="flex items-center w-full gap-2">
+// 							<Label htmlFor="privateKey" className="w-24 text-right">
+// 								Private
+// 							</Label>
+// 							<Input
+// 								id="privatekey"
+// 								value={signer.privateKey}
+// 								type="password"
+// 								className="flex-grow"
+// 							/>
+// 1							<Button
+// 								onClick={() =>
+// 									copyToClipboard(signer.privateKey, setCopiedPrivate)
+// 								}
+// 							>
+// 								{copiedPrivate ? (
+// 									<CheckIcon className="h-4 w-4" />
+// 								) : (
+// 									<CopyIcon className="h-4 w-4" />
+// 								)}
+// 							</Button>
+// 						</div>
+// 								{/* <Button
+// 			onClick={() => {
+// 				dc(signer.privateKey);
+// 				setApproved(true);
+// 			}}
+// 		>
+// 			{approved ? "Approved" : "Approve once again"}
+// 		</Button> */}
+// 					</div>
+// 				</div>
 			)}
 		</main>
 	);
