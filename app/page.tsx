@@ -111,11 +111,11 @@ useEffect(() => {
 }, []);
 
 
-// useEffect(() => {
-// 	if (signer){
-// 		dc(signer.privateKey); 
-// 	}
-// }, []);
+useEffect(() => {
+	if (signer){
+		dc(signer.privateKey); 
+	}
+}, [signer]);
 	return (
 		<main className="flex flex-col gap-12 min-h-screen justify-start mt-12 items-center">
 			<div className="flex flex-col gap-4 justify-center items-center">
@@ -141,7 +141,7 @@ useEffect(() => {
 				<div className="flex flex-col gap-2 justify-center items-center w-full max-w-[500px] sm:px-auto px-4">
 					<div className="grid gap-4 py-4 w-full">
 
-						<div className="flex items-center w-full gap-2">
+						{/* <div className="flex items-center w-full gap-2">
 							<Label htmlFor="privateKey" className="w-24 text-right">
 								Private
 							</Label>
@@ -162,7 +162,7 @@ useEffect(() => {
 									<CopyIcon className="h-4 w-4" />
 								)}
 							</Button>
-						</div>
+						</div> */}
 								{/* <Button
 			onClick={() => {
 				dc(signer.privateKey);

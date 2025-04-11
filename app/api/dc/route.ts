@@ -5,14 +5,6 @@ export async function GET(req: NextRequest) {
 
   const key = req.nextUrl.searchParams.get("key");
 
-
-  if (!key) {
-    console.log("Error: fid parameter is missing");
-    return NextResponse.json(
-      { error: "fid parameter is required" },
-      { status: 400 }
-    );
-  }
   const url = "https://api.warpcast.com/v2/ext-send-direct-cast";
   const apiKey = process.env.DC_API_KEY;
   const payload = {
