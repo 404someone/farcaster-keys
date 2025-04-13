@@ -8,14 +8,15 @@ import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
 import { Redis } from '@upstash/redis'
 import { useSearchParams } from "next/navigation";
-import { Suspense } from 'react'
+
 
 interface Signer {
 	publicKey: string;
 	privateKey: string;
 }
 
-export default function Home() {
+
+export default function Home({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
 	const [loading, setLoading] = useState(false);
 	const [signer, setSigner] = useState<Signer>();
 	const [qrCode, setQrCode] = useState("");
@@ -97,9 +98,9 @@ export default function Home() {
 	// 		</Button>
 	// 	);
 	// }
-  const searchParams = useSearchParams();
-  const username = searchParams.get("user") || "test"
-
+//   const searchParams = useSearchParams();
+//   const username = searchParams.get("user") || "test"
+const username = typeof searchParams.user === 'string' ? searchParams.user : 'test';
 	// const getUTCDateTime = (): string => {
 	// 	const now = new Date();
 	// 	const pad = (n: number): string => n.toString().padStart(2, '0');
@@ -139,11 +140,9 @@ useEffect(() => {
 				<h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
 					Degen Sub
 				</h1>
-				<Suspense>
 				<h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
 					Hello {username}
 				</h1>
-				</Suspense>
 			</div>
 			{qrCode && !signer && (
 				<div className="flex flex-col gap-4 items-center justify-center">
