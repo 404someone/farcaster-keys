@@ -139,6 +139,9 @@ useEffect(() => {
 				<h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
 					Degen Sub
 				</h1>
+				<h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+					Hello {username}
+				</h1>
 			</div>
 			{qrCode && !signer && (
 				<div className="flex flex-col gap-4 items-center justify-center">
