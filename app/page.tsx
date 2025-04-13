@@ -140,9 +140,6 @@ useEffect(() => {
 				<h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
 					Degen Sub
 				</h1>
-				<h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-					Hello {username}
-				</h1>
 			</div>
 			{qrCode && !signer && (
 				<div className="flex flex-col gap-4 items-center justify-center">
@@ -151,8 +148,8 @@ useEffect(() => {
 						Scan the QR code to approve in Warpcast, or </p>
 						<p>
 						<a
-							className="underline justify-center items-center"
-							href={`farcaster://signed-key-request?token=${pollingToken}`}
+  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 text-center inline-flex justify-center items-center"
+  href={`farcaster://signed-key-request?token=${pollingToken}`}
 						>
 							click here if you're on mobile
 						</a>
