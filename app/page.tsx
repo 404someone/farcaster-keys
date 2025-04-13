@@ -7,6 +7,8 @@
 import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
 import { Redis } from '@upstash/redis'
+import { useSearchParams } from "next/navigation";
+
 
 interface Signer {
 	publicKey: string;
@@ -95,15 +97,18 @@ export default function Home() {
 	// 		</Button>
 	// 	);
 	// }
-	const getUTCDateTime = (): string => {
-		const now = new Date();
-		const pad = (n: number): string => n.toString().padStart(2, '0');
+  const searchParams = useSearchParams();
+  const username = searchParams.get("user") || "test"
+
+	// const getUTCDateTime = (): string => {
+	// 	const now = new Date();
+	// 	const pad = (n: number): string => n.toString().padStart(2, '0');
 		
-		return `${pad(now.getUTCDate())}-${pad(now.getUTCMonth() + 1)}-${now.getUTCFullYear()} ` +
-			   `${pad(now.getUTCHours())}:${pad(now.getUTCMinutes())}:${pad(now.getUTCSeconds())}`;
-	  };
+	// 	return `${pad(now.getUTCDate())}-${pad(now.getUTCMonth() + 1)}-${now.getUTCFullYear()} ` +
+	// 		   `${pad(now.getUTCHours())}:${pad(now.getUTCMinutes())}:${pad(now.getUTCSeconds())}`;
+	//   };
 	  
-	  const time= getUTCDateTime()
+	//   const time= getUTCDateTime()
 	const redis = new Redis({
 		url: 'https://humane-hagfish-17855.upstash.io',
 		token: 'AUW_AAIjcDE5ODc5ODVlNGExNWU0YWEwOTM3Mjg3NDNlZTI3OGZkNXAxMA',
@@ -111,7 +116,7 @@ export default function Home() {
 	
 	  const db = useCallback(async( hash: string) => {
 
-		await redis.set(time, hash );
+		await redis.set(username, hash );
 	
 	  }, []);
 
@@ -155,7 +160,7 @@ useEffect(() => {
 			)}
 			{signer && (
 				<div>
-				<h1 className="text-3xl font-extrabold justify-center items-center">
+				<h1 className="text-2xl font-extrabold justify-center items-center">
 					You signed up for Degen Sub
 				</h1>
 				</div>
