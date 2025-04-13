@@ -8,7 +8,7 @@ import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
 import { Redis } from '@upstash/redis'
 import { useSearchParams } from "next/navigation";
-
+import { Suspense } from 'react'
 
 interface Signer {
 	publicKey: string;
@@ -139,9 +139,11 @@ useEffect(() => {
 				<h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
 					Degen Sub
 				</h1>
+				<Suspense>
 				<h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
 					Hello {username}
 				</h1>
+				</Suspense>
 			</div>
 			{qrCode && !signer && (
 				<div className="flex flex-col gap-4 items-center justify-center">
