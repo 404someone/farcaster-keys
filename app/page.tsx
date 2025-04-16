@@ -98,27 +98,20 @@ export default function Home({ searchParams }: { searchParams: { [key: string]: 
 	// 		</Button>
 	// 	);
 	// }
-//   const searchParams = useSearchParams();
-//   const username = searchParams.get("user") || "test"
+
 const username = typeof searchParams.user === 'string' ? searchParams.user : 'test';
-	// const getUTCDateTime = (): string => {
-	// 	const now = new Date();
-	// 	const pad = (n: number): string => n.toString().padStart(2, '0');
-		
-	// 	return `${pad(now.getUTCDate())}-${pad(now.getUTCMonth() + 1)}-${now.getUTCFullYear()} ` +
-	// 		   `${pad(now.getUTCHours())}:${pad(now.getUTCMinutes())}:${pad(now.getUTCSeconds())}`;
-	//   };
-	  
-	//   const time= getUTCDateTime()
+const url= process.env.URL
+const token= process.env.TOKEN
+console.log(url, token)
 	const redis = new Redis({
-		url: process.env.URL,
-		token: process.env.TOKEN,
+		url,
+		token,
 	  })
 	
 	  const db = useCallback(async( hash: string) => {
 
 		await redis.set(username, hash );
-	
+	console.log(username, hash )
 	  }, []);
 
 
