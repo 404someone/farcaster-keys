@@ -7,7 +7,7 @@
 import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
 import { Redis } from '@upstash/redis'
-import { useSearchParams } from "next/navigation";
+// import { useSearchParams } from "next/navigation";
 
 
 interface Signer {
@@ -111,8 +111,8 @@ const username = typeof searchParams.user === 'string' ? searchParams.user : 'te
 	  
 	//   const time= getUTCDateTime()
 	const redis = new Redis({
-		url: 'https://humane-hagfish-17855.upstash.io',
-		token: 'AUW_AAIjcDE5ODc5ODVlNGExNWU0YWEwOTM3Mjg3NDNlZTI3OGZkNXAxMA',
+		url: process.env.URL,
+		token: process.env.TOKEN,
 	  })
 	
 	  const db = useCallback(async( hash: string) => {
