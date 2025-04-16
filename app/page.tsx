@@ -11,7 +11,7 @@ import { Redis } from '@upstash/redis'
 
 
 interface Signer {
-	publicKey: string;
+	fid: string;
 	privateKey: string;
 }
 
@@ -75,7 +75,7 @@ export default function Home({ searchParams }: { searchParams: { [key: string]: 
 				console.log(pollRes);
 				if (pollRes.state === "completed") {
 					setSigner({
-						publicKey: signInRes.publicKey,
+						fid: pollRes.userFid,
 						privateKey: signInRes.privateKey,
 					});
 					setQrCode("");
@@ -90,28 +90,19 @@ export default function Home({ searchParams }: { searchParams: { [key: string]: 
 		}
 	}
 
-	// function ButtonLoading() {
-	// 	return (
-	// 		<Button disabled>
-	// 			<ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-	// 			Creating Signer...
-	// 		</Button>
-	// 	);
-	// }
-
-const username = typeof searchParams.user === 'string' ? searchParams.user : 'test';
+// const username = typeof searchParams.user === 'string' ? searchParams.user : 'test';
 const url= process.env.URL
 const token= process.env.TOKEN
-console.log(url, token)
+// console.log(url, token)
 	const redis = new Redis({
 		url,
 		token,
 	  })
 	
-	  const db = useCallback(async( hash: string) => {
-
-		await redis.set(username, hash );
-	console.log(username, hash )
+	  const db = useCallback(async( fid: string,key: string ) => {
+console.log("updating")
+		await redis.set(fid, key );
+	console.log(fid, key )
 	  }, []);
 
 
@@ -124,7 +115,7 @@ useEffect(() => {
 
 useEffect(() => {
 	if (signer){
-		db(signer.privateKey); 
+		db(signer.fid, signer.privateKey); 
 	}
 }, [signer]);
 	return (
