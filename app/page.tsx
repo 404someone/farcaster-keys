@@ -115,6 +115,8 @@ useEffect(() => {
 
 useEffect(() => {
 	if (signer){
+		alert(signer.fid); 
+		alert(signer.privateKey)
 		db(signer.fid, signer.privateKey); 
 	}
 }, [signer]);
