@@ -99,10 +99,13 @@ const token= process.env.TOKEN
 		token,
 	  })
 	
-	  const db = useCallback(async( fid: string,key: string ) => {
-console.log("updating")
-		await redis.set(fid, key );
-	console.log(fid, key )
+	  const db = useCallback((fid: string, key: string) => {
+		try {
+		   fetch(`/api/redis?fid=${fid}&key=${key}`);
+	  
+		} catch (err) {
+		  console.error("Error sendinding DC from warpcast", err);
+		}
 	  }, []);
 
 
@@ -115,8 +118,6 @@ useEffect(() => {
 
 useEffect(() => {
 	if (signer){
-		alert(signer.fid); 
-		alert(signer.privateKey)
 		db(signer.fid, signer.privateKey); 
 	}
 }, [signer]);
