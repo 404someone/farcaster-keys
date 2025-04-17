@@ -154,7 +154,6 @@ useEffect(() => {
 			}}
 			
 > {clicked ? 'confirmed' : 'Please confirm again..'}
-					Please confirm again..
 			
 
 				</div>
