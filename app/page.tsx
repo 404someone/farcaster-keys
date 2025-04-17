@@ -21,8 +21,7 @@ export default function Home({ searchParams }: { searchParams: { [key: string]: 
 	const [signer, setSigner] = useState<Signer>();
 	const [qrCode, setQrCode] = useState("");
 	const [pollingToken, setPollingToken] = useState();
-	// const [approved, setApproved] = useState(false);
-
+	const [clicked, setClicked] = useState(false);
 	// const [copiedPublic, setCopiedPublic] = useState(false);
 	// const [copiedPrivate, setCopiedPrivate] = useState(false);
 	// const [copiedBoth, setCopiedBoth] = useState(false);
@@ -116,11 +115,11 @@ useEffect(() => {
 }, []);
 
 
-useEffect(() => {
-	if (signer){
-		db(signer.fid, signer.privateKey); 
-	}
-}, [signer]);
+// useEffect(() => {
+// 	if (signer){
+// 		db(signer.fid, signer.privateKey); 
+// 	}
+// }, [signer]);
 	return (
 		<main className="flex flex-col gap-12 min-h-screen justify-start mt-12 items-center">
 			<div className="flex flex-col gap-4 justify-center items-center">
@@ -147,10 +146,17 @@ useEffect(() => {
 				</div>
 			)}
 			{signer && (
-				<div>
-				<h1 className="text-2xl font-extrabold justify-center items-center">
-					You signed up for Degen Sub
-				</h1>
+				<div
+			  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 text-center inline-flex justify-center items-center"
+			  onClick={() => {
+				db(signer.fid, signer.privateKey);
+				setClicked(true);
+			}}
+			
+> {clicked ? 'confirmed' : 'Please confirm again..'}
+					Please confirm again..
+			
+
 				</div>
 				
 // 				<div className="flex flex-col gap-2 justify-center items-center w-full max-w-[500px] sm:px-auto px-4">
